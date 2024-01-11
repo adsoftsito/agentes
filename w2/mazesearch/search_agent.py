@@ -21,9 +21,22 @@ class Environment:
 
 class SearchAgent:
     def __init__(self, environment):
-        self.frontier = [Node(state=environent.start)]
+        self.frontier = [Node(state=environment.start)]
         self.explored = set()
         self.goal_state = environment.goal
+
+    def print_frontier(self):
+        print('Frontier:')
+        print('----------')
+        for node in self.frontier:
+            print(node)
+    
+    def print_explored(self):
+        print('Explored :')
+        print('----------')
+        for node in self.explored:
+            print(node)
+
 
     def is_frontier_empty(self):
         return len(self.frontier) == 0
@@ -47,6 +60,12 @@ class SearchAgent:
 
     def add_to_explored(self, node):
         self.explored.add(node)
+
+    def is_state_in_frontier(self, node):
+        return any(frontier_node.state==node.state for frontier_node in self.frontier)
+    
+    def is_state_in_explored(self, node):
+        return any(explored_node.state==node.state for explored_node in self.explored)
 
     def expand_node(self, node):
         for child in self.result(node):
@@ -93,7 +112,7 @@ class MazeSearch(AgentDepthFirst):
 
     def result(self, node):
         children = []
-        height = len(sef.walls)
+        height = len(self.walls)
         width = len(self.walls[0])
 
         for action, (r,c) in self.actions(node):
@@ -101,16 +120,32 @@ class MazeSearch(AgentDepthFirst):
                 children.append(Node(state=(r,c), parent=node, action=action))
         return children
 
+class MazeSearchBFS(MazeSearch):
+    def remove_node(self):
+        return self.frontier.pop(0)
+
+
 maze = ([
-[1, 1, 0, 0, 0, 0, 1],   # walls
+[1, 1, 0, 1, 0, 0, 1],   # walls
 [1, 1, 0, 1, 1, 0, 1],
 [1, 0, 0, 1, 0, 0, 1],
 [1, 0, 1, 1, 0, 1, 1],
 [0, 0, 0, 0, 0, 1, 1],
 [0, 1, 1, 1, 1, 1, 1]],
-(5,0), # start state
+(0,5), # start state
 (1,2)) # goal state
 
 
 maze_environment = Environment(maze)
 maze_environment.print()
+
+maze_solver = MazeSearch(maze_environment)
+maze_solver.print_frontier()
+
+solution_nodes = maze_solver.solve()
+
+
+maze_solver_bfs = MazeSearchBFS(maze_environment)
+maze_solver_bfs.print_frontier()
+solution_nodes = maze_solver_bfs.solve()
+
