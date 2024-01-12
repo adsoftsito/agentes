@@ -132,8 +132,8 @@ class Space:
             if image_prefix:
                 self.output_image(f"{image_prefix}{str(count).zfill(3)}.png")
 
-s = Space(height=6, width=12, num_hospitals=3)
-for i in range(5):
+s = Space(height=36, width=72, num_hospitals=12)
+for i in range(20):
     s.add_house(random.randrange(s.height), random.randrange(s.width))
 
 hospitals = s.hill_climb(image_prefix="hospitals", log=True)
