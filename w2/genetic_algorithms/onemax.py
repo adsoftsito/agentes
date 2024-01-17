@@ -4,7 +4,7 @@ from numpy.random import rand
 
 # objective function
 def onemax(x):
-	return sum(x)
+	return -sum(x)
 
 # tournament selection
 def selection(pop, scores, k=3):

@@ -90,14 +90,14 @@ def mutation(agents):
 in_str = None
 in_str_len = None
 population = 20
-generations = 50000
+generations = 5000
 
 
 #if __name__ == '__main___':
 print("simple ga")
 
 #in_str = 'TroySquillaci'
-in_str = 'AdolfoCenteno'
+in_str = 'HelloWorld'
 
 in_str_len =len(in_str)
 ga()
