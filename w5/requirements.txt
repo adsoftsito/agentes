@@ -1,0 +1,3 @@
+cmake
+gym==0.15.3
+scipy
